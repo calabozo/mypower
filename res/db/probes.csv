@@ -1,0 +1,4 @@
+"label","description","realvirtual","formula"
+"fase1","General",true,NULL
+"fase2","General",true,NULL
+NULL,"General",false,"fase1-fase2"

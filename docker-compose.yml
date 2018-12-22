@@ -1,0 +1,16 @@
+version: '3.1'
+
+services:
+
+  db:
+    image: postgres:9.6
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: passwdb
+      POSTGRES_USER: userdb 
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./res/db:/docker-entrypoint-initdb.d
+      - ./data_docker/postgresql:/var/lib/postgresql/data
+

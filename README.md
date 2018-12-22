@@ -1,2 +1,2 @@
 # mypower
-Monitor house power consumption
+Monitor house power consumption based on Mirubox

@@ -1,0 +1,82 @@
+from datetime import datetime
+
+class ConsumptionData(object):
+    def __init__(self,probe_id):
+        self.probe_id = probe_id
+        self.vrms = None
+        self.irms = None
+        self.power_aparent = None
+        self.power_active = None
+        self.power_reactive_ind = None
+        self.power_reactive_cap = None
+        self.frequency = None
+        self.energy_active = None
+        self.energy_reactive_ind = None
+        self.energy_reactive_cap = None
+        self.price = None
+
+    def parse_xml(self,probe_label,exml):
+        timestamp = int(exml.find('time').text)
+        self.time = datetime.fromtimestamp(timestamp)
+        self.vrms = float(exml.find('%s_vrms'%probe_label).text)
+        self.irms = float(exml.find('%s_irms' % probe_label).text)
+        self.power_aparent = float(exml.find('%s_p_aparent' % probe_label).text)
+        self.power_active = float(exml.find('%s_p_activa' % probe_label).text)
+        self.power_reactive_ind = float(exml.find('%s_p_reactiva_ind' % probe_label).text)
+        self.power_reactive_cap = float(exml.find('%s_p_reactiva_cap' % probe_label).text)
+        self.frequency = float(exml.find('%s_frecuencia' % probe_label).text)
+        self.energy = None
+        self.energy_active = float(exml.find('%s_energia_activa' % probe_label).text)
+        self.energy_reactive_ind = float(exml.find('%s_energia_reactiva_ind' % probe_label).text)
+        self.energy_reactive_cap = float(exml.find('%s_energia_reactiva_cap' % probe_label).text)
+        self.price = None
+
+    def parse_db(self,row):
+        self.vrms = row['vrms']
+        self.irms = row['irms']
+        self.power_aparent = row['power_aparent']
+        self.power_active = row['power_active']
+        self.power_reactive_ind = row['power_reactive_ind']
+        self.power_reactive_cap = row['power_reactive_cap']
+        self.frequency = row['frequency']
+        self.energy_active = row['energy_active']
+        self.energy_reactive_ind = row['energy_active']
+        self.energy_reactive_cap = row['energy_reactive_cap']
+        self.energy = row['energy']
+        self.price = row['price']
+
+    def set_energy(self,energy,time):
+        self.time = time
+        self.energy = energy
+
+    def set_tariff(self,tariff):
+        self.price=tariff.get_price(self.time)*self.energy/1000
+
+
+    def __str__(self):
+        out = 'probe_id:%d\n'%self.probe_id
+        out += '  time:%s\n' % self.time
+        out += '  vrms:%s\n' % self.vrms
+        out += '  irms:%s\n' % self.irms
+        out += '  power_aparent:%s\n' % self.power_aparent
+        out += '  power_active:%s\n' % self.power_active
+        out += '  power_reactive_ind:%s\n' % self.power_reactive_ind
+        out += '  power_reactive_cap:%s\n' % self.power_reactive_cap
+        out += '  frequency:%s\n' % self.frequency
+        out += '  energy: %s\n' % self.energy
+        out += '  energy_active:%s\n' % self.energy_active
+        out += '  energy_reactive_ind:%s\n' % self.energy_reactive_ind
+        out += '  energy_reactive_cap:%s\n' % self.energy_reactive_cap
+        out += '  price:%s\n' % self.price
+        return out
+
+class Tariff(object):
+    def __init__(self, tariff):
+        self.valley = float(tariff['valley'])
+        self.peak = float(tariff['peak'])
+
+    def get_price(self,time):
+        if time.hour > 12 & time.hour < 22:
+            return self.peak
+        else:
+            return self.valley

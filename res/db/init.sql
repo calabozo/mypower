@@ -8,7 +8,8 @@ CREATE TABLE public.probes
     label text,
     description text,
     realvirtual boolean,
-    formula text
+    formula text,
+    tariff_id INT
 );
 COMMENT ON COLUMN probes.id is 'probe internal identifier';
 COMMENT ON COLUMN probes.label is 'probe external identifier';
@@ -44,7 +45,7 @@ COMMENT ON COLUMN taxes.value is 'Amount to tax';
 CREATE TABLE public.data
 (
   probe_id INT,
-  time TIMESTAMPTZ,
+  time TIMESTAMP,
   vrms NUMERIC(5,2),
   irms NUMERIC(4,2),
   power_aparent NUMERIC(7,2),
@@ -54,15 +55,11 @@ CREATE TABLE public.data
   frequency NUMERIC(4,2),
   energy_active NUMERIC(12,2),
   energy_reactive_ind NUMERIC(12,2),
-  energy_reactive_cap NUMERIC(12,2)
+  energy_reactive_cap NUMERIC(12,2),
+  energy NUMERIC(7,2),
+  price NUMERIC(10,8)
 );
 COMMENT ON COLUMN data.probe_id is 'Probe id from the probes table';
-
-CREATE TABLE public.price
-(
-  probe_id INT,
-  time TIMESTAMPTZ,
-  price_month NUMERIC(6,2)
-);
-COMMENT ON COLUMN price.probe_id is 'Probe id from the probes table';
-COMMENT ON COLUMN price.price_month is 'Amount of money since the start of the current month';
+COMMENT ON COLUMN data.energy is 'Amount of energy since the last sample';
+COMMENT ON COLUMN data.price  is 'Amount of money since the last sample';
+CREATE INDEX dataidx on data(probe_id,time);

@@ -29,11 +29,17 @@ def launch_query_and_save_in_db(host):
     db = Dao(user='userdb', password='passwdb', host='127.0.0.1')
 
     db.connect()
+
     probes = db.get_real_probes()
+    tariff = db.get_tariff(1)
 
     for probe in probes:
+        last_data = db.get_last_sample_from_probe(probe['id'])
+
         cmpdata = ConsumptionData(probe['id'])
         cmpdata.parse_xml(probe['label'], exml)
+        cmpdata.calc_energy(last_data)
+        cmpdata.set_tariff(tariff)
         db.save_data(cmpdata)
 
 def read_data_and_save_in_db(file_name):

@@ -32,22 +32,28 @@ class ConsumptionData(object):
         self.price = None
 
     def parse_db(self,row):
-        self.vrms = row['vrms']
-        self.irms = row['irms']
-        self.power_aparent = row['power_aparent']
-        self.power_active = row['power_active']
-        self.power_reactive_ind = row['power_reactive_ind']
-        self.power_reactive_cap = row['power_reactive_cap']
-        self.frequency = row['frequency']
-        self.energy_active = row['energy_active']
-        self.energy_reactive_ind = row['energy_active']
-        self.energy_reactive_cap = row['energy_reactive_cap']
-        self.energy = row['energy']
-        self.price = row['price']
+        self.vrms = float(row['vrms'])
+        self.irms = float(row['irms'])
+        self.power_aparent = float(row['power_aparent'])
+        self.power_active = float(row['power_active'])
+        self.power_reactive_ind = float(row['power_reactive_ind'])
+        self.power_reactive_cap = float(row['power_reactive_cap'])
+        self.frequency = float(row['frequency'])
+        self.energy_active = float(row['energy_active'])
+        self.energy_reactive_ind = float(row['energy_active'])
+        self.energy_reactive_cap = float(row['energy_reactive_cap'])
+        self.energy = float(row['energy'])
+        self.price = float(row['price'])
 
     def set_energy(self,energy,time):
         self.time = time
         self.energy = energy
+
+    def calc_energy(self,prev_consumption_data):
+        if (prev_consumption_data is None or prev_consumption_data.energy_active is None):
+            self.energy = 0
+        else:
+            self.energy = self.energy_active - prev_consumption_data.energy_active
 
     def set_tariff(self,tariff):
         self.price=tariff.get_price(self.time)*self.energy/1000

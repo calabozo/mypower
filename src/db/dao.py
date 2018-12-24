@@ -62,8 +62,11 @@ class Dao(object):
     def get_last_sample_from_probe(self,probe_id):
         cur = self.conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         sql = "SELECT * from data WHERE probe_id=%s ORDER BY time DESC LIMIT 1;"
+        cur.execute(sql, (probe_id,))
         row=cur.fetchone()
-        cmpdata = ConsumptionData(row['id'])
+        if row is None:
+            return None
+        cmpdata = ConsumptionData(row['probe_id'])
         cmpdata.parse_db(row)
         cur.close()
         return cmpdata

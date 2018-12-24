@@ -1,0 +1,4 @@
+FROM python:2-alpine3.8
+
+RUN crontab -l | { cat; echo "*/5    *       *       *       *       python /opt/mypower/save_mirubee_data.py"; } | crontab -
+CMD ['/usr/sbin/crond','-f']

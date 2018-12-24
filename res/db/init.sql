@@ -57,7 +57,7 @@ CREATE TABLE public.data
   energy_reactive_ind NUMERIC(12,2),
   energy_reactive_cap NUMERIC(12,2),
   energy NUMERIC(7,2),
-  price NUMERIC(10,8)
+  price NUMERIC(11,9)
 );
 COMMENT ON COLUMN data.probe_id is 'Probe id from the probes table';
 COMMENT ON COLUMN data.energy is 'Amount of energy since the last sample';

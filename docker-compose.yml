@@ -14,3 +14,10 @@ services:
       - ./res/db:/docker-entrypoint-initdb.d
       - ./data_docker/postgresql:/var/lib/postgresql/data
 
+  python:
+    image: pythonflask
+    build:
+            context: docker_files
+            dockerfile: Docker_flask_i386
+    volumes:
+            - ./src:/mypower

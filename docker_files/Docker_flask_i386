@@ -1,4 +1,11 @@
 FROM python:2-alpine3.8
 
+
 RUN crontab -l | { cat; echo "*/5    *       *       *       *       python /opt/mypower/save_mirubee_data.py"; } | crontab -
-CMD ['/usr/sbin/crond','-f']
+
+RUN apk add --no-cache tini postgresql-dev musl-dev
+RUN apk add gcc && pip install psycopg2-binary requests && apk del gcc
+
+ENTRYPOINT ["/sbin/tini", "--"]
+
+CMD ["/usr/sbin/crond","-f"]

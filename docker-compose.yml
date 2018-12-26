@@ -18,6 +18,6 @@ services:
     image: pythonflask
     build:
             context: docker_files
-            dockerfile: Docker_flask_i386
+            dockerfile: Docker_flask
     volumes:
             - ./src:/mypower

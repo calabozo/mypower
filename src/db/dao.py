@@ -17,6 +17,8 @@ class Dao(object):
         self.conn = psycopg2.connect(user=self.user, password=self.password, host=self.host,
                                      port=self.port, dbname=self.database)
 
+    def disconnect(self):
+        #self.conn
         pass
 
     def get_real_probes(self):
@@ -72,6 +74,3 @@ class Dao(object):
         return cmpdata
 
 
-    def update_price(self,data_row):
-
-        pass

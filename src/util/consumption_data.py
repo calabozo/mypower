@@ -86,3 +86,18 @@ class Tariff(object):
             return self.peak
         else:
             return self.valley
+
+class MonthlyConsumption(object):
+    def __init__(self, row):
+        self.energy = float(row['energy'])
+        self.price  = float(row['price'])
+        self.month  = row['month']
+
+    def __str__(self):
+        out = 'Energy: %s, Price: %s, Month: %s'%(
+                str(self.energy),str(self.price),str(self.month))
+        return out
+
+
+
+

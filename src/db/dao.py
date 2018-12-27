@@ -1,7 +1,7 @@
 import psycopg2
 import psycopg2.extras
 import logging
-from util.consumption_data import ConsumptionData, Tariff
+from util.consumption_data import ConsumptionData, Tariff, MonthlyConsumption
 
 
 class Dao(object):
@@ -18,8 +18,7 @@ class Dao(object):
                                      port=self.port, dbname=self.database)
 
     def disconnect(self):
-        #self.conn
-        pass
+        self.conn.close()
 
     def get_real_probes(self):
         cur = self.conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -72,5 +71,24 @@ class Dao(object):
         cmpdata.parse_db(row)
         cur.close()
         return cmpdata
+
+    def get_monthly_consumption(self,probe_id,mode='all'):
+        #TODO: Summer and winter daylight savings
+        cur = self.conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        if mode == 'all':
+            sql = "select sum(energy) as energy,sum(price) as price,to_char(time,'YYYY-MM-DD') as month from data where probe_id=%s group by to_char(time, 'YYYY-MM-DD');"
+        elif mode == 'peak':
+            sql = "select sum(energy) as energy,sum(price) as price,to_char(time,'YYYY-MM-DD') as month from data where probe_id=%s and extract(hour from time)>=12 AND extract(hour from time)<22  group by to_char(time, 'YYYY-MM-DD');"
+        elif mode == 'valley':
+            sql = "select sum(energy) as energy,sum(price) as price,to_char(time,'YYYY-MM-DD') as month from data where probe_id=%s and (extract(hour from time)<12 OR extract(hour from time)>=22)  group by to_char(time, 'YYYY-MM-DD');"
+                
+        cur.execute(sql, (probe_id,))
+        rows=cur.fetchall()
+        monthly_consumptions = []
+        for row in rows:
+            monthly_consumptions.append(MonthlyConsumption(row))
+  
+        return monthly_consumptions
+
 
 

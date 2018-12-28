@@ -82,7 +82,7 @@ class Tariff(object):
         self.peak = float(tariff['peak'])
 
     def get_price(self,time):
-        if time.hour > 12 & time.hour < 22:
+        if time.hour >= 12 & time.hour < 22:
             return self.peak
         else:
             return self.valley

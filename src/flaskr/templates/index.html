@@ -1,0 +1,49 @@
+<!doctype html>
+<title>Consumo</title>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+<div class=page>
+  <h1>Consumo</h1>
+  <div>
+      <h2>Tarifas vigentes</h2>
+      <table class="tabla_tarifas">
+        <tr><td>Tarifa valle (22h-12h):</td><td>{{ tariff.valley }} €/kwh </td></tr>
+        <tr><td>Tarifa pico  (12h-22h):</td><td>{{ tariff.peak }}  €/kwh</td></tr>
+      </table>
+  </div>
+  <div>
+      <h2>Tabla consumos</h2>
+      <table class="tabla_consumos">
+          <tr>
+                <td> Fecha </td>
+                {% for date in consumption['date'] %}
+                <td> {{ date }} </td>
+                {% endfor %}
+          </tr>
+          <tr>
+                <td> Consumo horario valle [kwh]</td>
+                {% for val in consumption.energy_valley %}
+                <td> {{ val }} </td>
+                {% endfor %}
+            </tr>
+          <tr>
+                <td> Consumo horario pico [kwh]</td>
+                {% for val in consumption.energy_peak %}
+                <td> {{ val }} </td>
+                {% endfor %}
+            </tr>
+          <tr>
+                <td> Consumo total [kwh] </td>
+                {% for val in consumption.energy_total %}
+                <td> {{ val }} </td>
+                {% endfor %}
+          </tr>
+          <tr>
+                <td> Precio [€] </td>
+                {% for val in consumption.price_total %}
+                <td> {{ val }} </td>
+                {% endfor %}
+          </tr>
+      </table>
+
+  </div>
+</div>

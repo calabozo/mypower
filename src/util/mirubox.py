@@ -43,7 +43,7 @@ def launch_query_and_save_in_db(host):
         db.save_data(cmpdata)
 
 def read_data_and_save_in_db(file_name):
-    db = Dao(user='userdb', password='passwdb', host='127.0.0.1')
+    db = Dao(user='userdb', password='passwdb', host='db')
     db.connect()
     def save_probe_data(probe_id,energy,time,tariff ):
         if probe_id is None:

@@ -40,7 +40,7 @@ class ConsumptionData(object):
         self.power_reactive_cap = float(row['power_reactive_cap'])
         self.frequency = float(row['frequency'])
         self.energy_active = float(row['energy_active'])
-        self.energy_reactive_ind = float(row['energy_active'])
+        self.energy_reactive_ind = float(row['energy_reactive_ind'])
         self.energy_reactive_cap = float(row['energy_reactive_cap'])
         self.energy = float(row['energy'])
         self.price = float(row['price'])
@@ -82,7 +82,7 @@ class Tariff(object):
         self.peak = float(tariff['peak'])
 
     def get_price(self,time):
-        if time.hour >= 12 & time.hour < 22:
+        if time.hour >= 12 and time.hour < 22:
             return self.peak
         else:
             return self.valley

@@ -87,6 +87,28 @@ class Tariff(object):
         else:
             return self.valley
 
+class Taxes(object):
+    class Tax(object):
+        def __init__(self,tax):
+            self.name = tax['name']
+            self.value = float(tax['value'])
+            self.relabs = bool(tax['relabs'])
+
+
+    def __init__(self,db_taxes):
+        self.taxes = []
+        for tax in db_taxes:
+            self.taxes.append(Taxes.Tax(tax))
+
+    def calculate_taxes(self,amount):
+        final_tax= 0
+        for tax in self.taxes:
+            if (tax.relabs):
+                final_tax += tax.value/100.0*amount
+            else:
+                final_tax += tax.value
+        return final_tax
+
 class MonthlyConsumption(object):
     def __init__(self, row):
         self.energy = float(row['energy'])

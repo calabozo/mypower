@@ -3,44 +3,77 @@
 <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
 <div class=page>
   <h1>Consumo</h1>
-  <div>
-      <h2>Tarifas vigentes</h2>
-      <table class="tabla_tarifas">
-        <tr><td>Tarifa valle (22h-12h):</td><td>{{ tariff.valley }} €/kwh </td></tr>
-        <tr><td>Tarifa pico  (12h-22h):</td><td>{{ tariff.peak }}  €/kwh</td></tr>
-      </table>
+  <div class="text_description">
+      <p>
+          La tarifa contratada tiene un precio distinto en función de la hora consumo.
+          La tarifa más barata, llamada valle, es la que se encuentra en horario de invierno desde las 22h hasta las 12h.
+          En verano el intervalo será desde las 23h hasta las 13h.
+
+          En las siguientes tablas se muestra el precio por kwh junto con los impuestos aplicados
+      </p>
+  </div>
+  <div style='width: 100%; display: table;'>
+      <div style='display: table-row'>
+          <div  class="tabla_tarifas">
+              <h2>Tarifas vigentes</h2>
+              <table>
+                <tr><td class="title">Tarifa valle (22h-12h):</td><td>{{ tariff.valley }} €/kwh </td></tr>
+                <tr><td class="title">Tarifa pico  (12h-22h):</td><td>{{ tariff.peak }}  €/kwh</td></tr>
+              </table>
+          </div>
+          <div  class="tabla_impuestos">
+              <h2>Impuestos</h2>
+              <table>
+                  {% for tax in taxes %}
+                  <tr><td class="title"> {{ tax.name }} </td><td>{{ tax.value }}% </td></tr>
+                  {% endfor %}
+              </table>
+          </div>
+      </div>
+  </div>
+  <div class="text_description">
+      <p>
+          La siguiente tabla muestra el consumo del mes en curso y de los meses anteriores. Se muestra la siguiente información:
+      </p>
+      <ul>
+          <li>Fecha: Mes en que se produce la medida. El valor del mes en curso se actualiza cada 10 minutos.</li>
+          <li>Consumo horario valle: Kwh consumidos entre las 22h y las 12h.</li>
+          <li>Consumo horario pico: Kwh consumidos entre las 22h y las 12h.</li>
+          <li>Consumo total: Suma de los kwh valle y pico.</li>
+          <li>Precio: Precio final a pagar a mes vencido, impuestos incluidos.</li>
+      </ul>
   </div>
   <div>
       <h2>Tabla consumos</h2>
       <table class="tabla_consumos">
           <tr>
-                <td> Fecha </td>
+                <td class="title"> Fecha </td>
                 {% for date in consumption['date'] %}
-                <td> {{ date }} </td>
+                <td class="title"> {{ date }} </td>
                 {% endfor %}
           </tr>
           <tr>
-                <td> Consumo horario valle [kwh]</td>
+                <td class="title"> Consumo horario valle [kwh]</td>
                 {% for val in consumption.energy_valley %}
                 <td> {{ val }} </td>
                 {% endfor %}
             </tr>
           <tr>
-                <td> Consumo horario pico [kwh]</td>
+                <td class="title"> Consumo horario pico [kwh]</td>
                 {% for val in consumption.energy_peak %}
                 <td> {{ val }} </td>
                 {% endfor %}
             </tr>
           <tr>
-                <td> Consumo total [kwh] </td>
+                <td class="title"> Consumo total [kwh] </td>
                 {% for val in consumption.energy_total %}
                 <td> {{ val }} </td>
                 {% endfor %}
           </tr>
           <tr>
-                <td> Precio [€] </td>
+                <td class="title"> Precio </td>
                 {% for val in consumption.price_total %}
-                <td> {{ val }} </td>
+                <td> {{ val }}€ </td>
                 {% endfor %}
           </tr>
       </table>

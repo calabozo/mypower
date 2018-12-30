@@ -1,16 +1,47 @@
 body            { font-family: sans-serif; background: #eee; }
 a, h1, h2       { color: #377ba8; }
-h1, h2          { font-family: 'Georgia', serif; margin: 0; }
+h1, h2          { font-family: 'Georgia', serif; margin: 0; margin-bottom:0.5em; }
 h1              { border-bottom: 2px solid #eee; }
 h2              { font-size: 1.2em; }
 
 .page           { margin: 2em auto;
                   padding: 0.8em; background: white; }
 table, th, td {
-   border-bottom: 1px solid black;
+   border-bottom: 1px solid gray;
    border-collapse: collapse;
+   padding-left: 1em;
 }
+
 
 div {
    margin: 2em;
+}
+
+.tabla_tarifas {
+   width: 40%;
+   display: table-cell;
+}
+
+.tabla_impuestos {
+   display: table-cell;
+}
+
+.tabla_consumos {
+   margin-top: 0.4em;
+   margin-left:1em;
+}
+
+.title {
+   font-weight: bold;
+}
+
+.text_description {
+   margin-top: 1em;
+}
+
+ul{
+   margin-top: 0.4em;
+}
+p {
+   margin-bottom: 0.4em;
 }

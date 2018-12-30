@@ -1,7 +1,7 @@
 import psycopg2
 import psycopg2.extras
 import logging
-from util.consumption_data import ConsumptionData, Tariff, MonthlyConsumption
+from util.consumption_data import ConsumptionData, Tariff, MonthlyConsumption, Taxes
 
 
 class Dao(object):
@@ -42,6 +42,14 @@ class Dao(object):
         tariff = cur.fetchone()
         cur.close()
         return Tariff(tariff)
+
+
+    def get_taxes(self):
+        cur = self.conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cur.execute("SELECT * from taxes;")
+        taxes = cur.fetchall()
+        cur.close()
+        return Taxes(taxes)
 
     def save_data(self,consumption_data):
         sql = "INSERT INTO data (probe_id, time, vrms,irms, power_aparent, power_active, power_reactive_ind, " \

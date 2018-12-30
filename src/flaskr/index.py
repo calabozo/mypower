@@ -22,7 +22,6 @@ def index():
     energy_total = []
     price_total = []
     for e in db_energy_total:
-        print(e)
         months.append(str(e.month))
         energy_total.append( str(e.energy/1e3))
         price_total.append( str(round((taxes.calculate_taxes(e.price)+e.price),2)))

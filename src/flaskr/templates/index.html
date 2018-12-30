@@ -1,5 +1,8 @@
 <!doctype html>
 <title>Consumo</title>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
 <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
 <div class=page>
   <h1>Consumo</h1>
@@ -12,24 +15,23 @@
           En las siguientes tablas se muestra el precio por kwh junto con los impuestos aplicados
       </p>
   </div>
-  <div style='width: 100%; display: table;'>
-      <div style='display: table-row'>
-          <div  class="tabla_tarifas">
-              <h2>Tarifas vigentes</h2>
-              <table>
-                <tr><td class="title">Tarifa valle (22h-12h):</td><td>{{ tariff.valley }} €/kwh </td></tr>
-                <tr><td class="title">Tarifa pico  (12h-22h):</td><td>{{ tariff.peak }}  €/kwh</td></tr>
-              </table>
-          </div>
-          <div  class="tabla_impuestos">
-              <h2>Impuestos</h2>
-              <table>
-                  {% for tax in taxes %}
-                  <tr><td class="title"> {{ tax.name }} </td><td>{{ tax.value }}% </td></tr>
-                  {% endfor %}
-              </table>
-          </div>
+  <div style="width: 100%;display: table;">
+      <div  class="tabla_tarifas">
+          <h2>Tarifas vigentes</h2>
+          <table>
+            <tr><td class="title">Tarifa valle (22h-12h):</td><td>{{ tariff.valley }} €/kwh </td></tr>
+            <tr><td class="title">Tarifa pico  (12h-22h):</td><td>{{ tariff.peak }}  €/kwh</td></tr>
+          </table>
       </div>
+      <div  class="tabla_impuestos">
+          <h2>Impuestos</h2>
+          <table>
+              {% for tax in taxes %}
+              <tr><td class="title"> {{ tax.name }} </td><td>{{ tax.value }}% </td></tr>
+              {% endfor %}
+          </table>
+      </div>
+
   </div>
   <div class="text_description">
       <p>

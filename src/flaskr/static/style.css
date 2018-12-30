@@ -10,20 +10,24 @@ table, th, td {
    border-bottom: 1px solid gray;
    border-collapse: collapse;
    padding-left: 1em;
+   font-size: 1em;
+   font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
 }
 
 
 div {
-   margin: 2em;
+   margin-top: 1em;
 }
 
 .tabla_tarifas {
    width: 40%;
-   display: table-cell;
+   float: left;
+   min-width: 400px;
+
 }
 
 .tabla_impuestos {
-   display: table-cell;
+   float: left;
 }
 
 .tabla_consumos {
@@ -45,3 +49,5 @@ ul{
 p {
    margin-bottom: 0.4em;
 }
+
+

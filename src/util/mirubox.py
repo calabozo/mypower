@@ -26,7 +26,7 @@ def launch_query_and_save_in_db(host):
 
     exml = xml.etree.ElementTree.fromstring(r.text)
 
-    db = Dao(user='userdb', password='passwdb', host='127.0.0.1')
+    db = Dao(user='userdb', password='passwdb', host='db')
 
     db.connect()
 

@@ -73,7 +73,7 @@ class Dao(object):
         sql = "SELECT * from data WHERE probe_id=%s ORDER BY time DESC LIMIT 1;"
         cur.execute(sql, (probe_id,))
         row=cur.fetchone()
-        if row is None:
+        if row is None or row['vrms'] is None:
             return None
         cmpdata = ConsumptionData(row['probe_id'])
         cmpdata.parse_db(row)

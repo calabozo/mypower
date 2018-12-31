@@ -1,4 +1,5 @@
 from datetime import datetime
+from tzlocal import get_localzone
 
 class ConsumptionData(object):
     def __init__(self,probe_id):
@@ -17,7 +18,7 @@ class ConsumptionData(object):
 
     def parse_xml(self,probe_label,exml):
         timestamp = int(exml.find('time').text)
-        self.time = datetime.fromtimestamp(timestamp)
+        self.time = datetime.fromtimestamp(timestamp, get_localzone())
         self.vrms = float(exml.find('%s_vrms'%probe_label).text)
         self.irms = float(exml.find('%s_irms' % probe_label).text)
         self.power_aparent = float(exml.find('%s_p_aparent' % probe_label).text)

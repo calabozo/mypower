@@ -45,7 +45,7 @@ COMMENT ON COLUMN taxes.value is 'Amount to tax';
 CREATE TABLE public.data
 (
   probe_id INT,
-  time TIMESTAMP,
+  time TIMESTAMP WITH TIME ZONE,
   vrms NUMERIC(5,2),
   irms NUMERIC(4,2),
   power_aparent NUMERIC(7,2),

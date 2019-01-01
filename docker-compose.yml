@@ -21,3 +21,5 @@ services:
             dockerfile: Docker_flask
     volumes:
             - ./src:/mypower
+    ports:
+        - "80:80"

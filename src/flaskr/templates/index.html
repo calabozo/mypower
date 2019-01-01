@@ -42,7 +42,7 @@
           <li>Consumo horario valle: Kwh consumidos entre las 22h y las 12h.</li>
           <li>Consumo horario pico: Kwh consumidos entre las 22h y las 12h.</li>
           <li>Consumo total: Suma de los kwh valle y pico.</li>
-          <li>Precio: Precio final a pagar a mes vencido, impuestos incluidos.</li>
+          <li>Importe: Importe final a pagar a mes vencido, impuestos incluidos.</li>
       </ul>
   </div>
   <div>
@@ -73,7 +73,7 @@
                 {% endfor %}
           </tr>
           <tr>
-                <td class="title"> Precio </td>
+                <td class="title"> Importe </td>
                 {% for val in consumption.price_total %}
                 <td> {{ val }}€ </td>
                 {% endfor %}

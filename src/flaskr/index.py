@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    dao = Dao(user='userdb', password='passwdb', host='127.0.0.1')
+    dao = Dao(user='userdb', password='passwdb', host='db')
     dao.connect()
     tariff = dao.get_tariff(1)
 

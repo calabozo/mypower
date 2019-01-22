@@ -20,15 +20,17 @@ COMMENT ON COLUMN probes.formula is 'Formula to apply to the real probes to get 
 
 CREATE TABLE public.tariff
 (
-    id SERIAL PRIMARY KEY,
+    id INT,
     name text,
     valley NUMERIC(8,7),
-    peak   NUMERIC(8,7)
+    peak   NUMERIC(8,7),
+    from_date DATE,
+    to_date DATE
 );
 COMMENT ON COLUMN tariff.name is 'Tariff name';
 COMMENT ON COLUMN tariff.valley is 'Price in valley time';
 COMMENT ON COLUMN tariff.peak is   'Price in peak time';
-\copy public.tariff(name,valley,peak) FROM '/docker-entrypoint-initdb.d/tariff.csv' DELIMITER ',' CSV HEADER;
+\copy public.tariff FROM '/docker-entrypoint-initdb.d/tariff.csv' DELIMITER ',' CSV HEADER;
 
 CREATE TABLE public.taxes
 (

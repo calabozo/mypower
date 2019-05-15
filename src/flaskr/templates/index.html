@@ -19,8 +19,8 @@
       <div  class="tabla_tarifas">
           <h2>Tarifas vigentes</h2>
           <table>
-            <tr><td class="title">Tarifa valle (22h-12h):</td><td>{{ tariff.valley }} €/kwh </td></tr>
-            <tr><td class="title">Tarifa pico  (12h-22h):</td><td>{{ tariff.peak }}  €/kwh</td></tr>
+            <tr><td class="title">Tarifa valle (23h-13h):</td><td>{{ tariff.valley }} €/kwh </td></tr>
+            <tr><td class="title">Tarifa pico  (13h-23h):</td><td>{{ tariff.peak }}  €/kwh</td></tr>
           </table>
       </div>
       <div  class="tabla_impuestos">
@@ -39,8 +39,8 @@
       </p>
       <ul>
           <li>Fecha: Mes en que se produce la medida. El valor del mes en curso se actualiza cada 10 minutos.</li>
-          <li>Consumo horario valle: Kwh consumidos entre las 22h y las 12h.</li>
-          <li>Consumo horario pico: Kwh consumidos entre las 12h y las 22h.</li>
+          <li>Consumo horario valle: Kwh consumidos entre las 22h y las 12h en horario de invierno (23h-13h en horario verano).</li>
+          <li>Consumo horario pico: Kwh consumidos entre las 12h y las 22h en horario de invierno (13h-23h en horario verano).</li>
           <li>Consumo total: Suma de los kwh valle y pico.</li>
           <li>Importe: Importe final a pagar a mes vencido, impuestos incluidos.</li>
       </ul>

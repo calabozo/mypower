@@ -19,7 +19,8 @@ services:
     build:
             context: docker_files
             dockerfile: Docker_flask
-    volumes:
-            - ./src:/mypower
     ports:
         - "80:80"
+    volumes:
+            - ./src:/mypower
+            - /etc/localtime:/etc/localtime

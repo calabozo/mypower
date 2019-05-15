@@ -38,7 +38,7 @@ class Dao(object):
 
     def get_tariff(self,tariff_id):
         cur = self.conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-        cur.execute("SELECT * from tariff WHERE id=%s AND from_date<current_date AND to_date>=current_date;",(tariff_id,))
+        cur.execute("SELECT * from tariff WHERE id=%s AND from_date<=current_date AND to_date>=current_date;",(tariff_id,))
         tariff = cur.fetchone()
         cur.close()
         return Tariff(tariff)

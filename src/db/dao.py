@@ -84,11 +84,11 @@ class Dao(object):
         #TODO: Summer and winter daylight savings
         cur = self.conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         if mode == 'all':
-            sql = "select sum(energy) as energy,sum(price) as price,to_char(time,'YYYY-MM') as month from data where probe_id=%s group by to_char(time, 'YYYY-MM') order by month desc;"
+            sql = "select sum(energy) as energy,sum(price) as price,to_char(time,'YYYY-MM') as month from data where probe_id=%s and time>='2019-12-01' group by to_char(time, 'YYYY-MM') order by month desc;"
         elif mode == 'peak':
-            sql = "select sum(energy) as energy,sum(price) as price,to_char(time,'YYYY-MM') as month from data where probe_id=%s and extract(hour from time)>=12 AND extract(hour from time)<22  group by to_char(time, 'YYYY-MM') order by month desc;"
+            sql = "select sum(energy) as energy,sum(price) as price,to_char(time,'YYYY-MM') as month from data where probe_id=%s and extract(hour from time)>=12 AND extract(hour from time)<22 AND time>='2019-12-01'  group by to_char(time, 'YYYY-MM') order by month desc;"
         elif mode == 'valley':
-            sql = "select sum(energy) as energy,sum(price) as price,to_char(time,'YYYY-MM') as month from data where probe_id=%s and (extract(hour from time)<12 OR extract(hour from time)>=22)  group by to_char(time, 'YYYY-MM')  order by month desc;"
+            sql = "select sum(energy) as energy,sum(price) as price,to_char(time,'YYYY-MM') as month from data where probe_id=%s and (extract(hour from time)<12 OR extract(hour from time)>=22) AND time>='2019-12-01'  group by to_char(time, 'YYYY-MM')  order by month desc;"
 
         cur.execute(sql, (probe_id,))
         rows=cur.fetchall()

@@ -65,3 +65,12 @@ COMMENT ON COLUMN data.probe_id is 'Probe id from the probes table';
 COMMENT ON COLUMN data.energy is 'Amount of energy since the last sample';
 COMMENT ON COLUMN data.price  is 'Amount of money since the last sample';
 CREATE INDEX dataidx on data(probe_id,time);
+
+CREATE TABLE public.ista
+(
+  ubicacion as text,
+  nun_serie as text,
+  tipo as text,
+  fecha as date,
+  valor as NUMERIC(7,3)
+);

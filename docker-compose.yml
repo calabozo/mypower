@@ -6,8 +6,8 @@ services:
     image: arm32v7/postgres:11.1
     restart: always
     environment:
-      POSTGRES_PASSWORD: passwdb
-      POSTGRES_USER: userdb 
+      - POSTGRES_PASSWORD=passwdb
+      - POSTGRES_USER=userdb 
     ports:
       - "5432:5432"
     volumes:

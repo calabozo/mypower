@@ -42,6 +42,8 @@ def launch_query_and_save_in_db(host):
         cmpdata.set_tariff(tariff)
         db.save_data(cmpdata)
 
+    db.disconnect()
+
 def read_data_and_save_in_db(file_name):
     db = Dao(user='userdb', password='passwdb', host='db')
     db.connect()
@@ -75,3 +77,5 @@ def read_data_and_save_in_db(file_name):
                 save_probe_data(probe_id3, energy_fase3, time, tariff )
 
             line_count += 1
+    
+    db.disconnect()

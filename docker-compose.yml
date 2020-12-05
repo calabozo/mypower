@@ -13,6 +13,7 @@ services:
     volumes:
       - ./res/db:/docker-entrypoint-initdb.d
       - ./data_docker/postgresql:/var/lib/postgresql/data
+      - ./res/my-postgres.conf:/var/lib/postgresql/data/postgresql.conf
 
   python:
     image: pythonflask

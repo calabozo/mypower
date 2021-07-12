@@ -95,7 +95,7 @@ class Dao(object):
         monthly_consumptions = []
         for row in rows:
             monthly_consumptions.append(MonthlyConsumption(row))
-
+        cur.close()
         return monthly_consumptions
 
 

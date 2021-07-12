@@ -37,7 +37,7 @@ CREATE TABLE public.taxes
     id SERIAL PRIMARY KEY,
     name text,
     relabs boolean,
-    value NUMERIC(8,5) 
+    value NUMERIC(8,5)
 );
 COMMENT ON COLUMN taxes.name is 'Taxes name';
 COMMENT ON COLUMN taxes.relabs is 'Tax relative (%) or absolute (fix quantity)';
@@ -68,9 +68,11 @@ CREATE INDEX dataidx on data(probe_id,time);
 
 CREATE TABLE public.ista
 (
-  ubicacion as text,
-  nun_serie as text,
-  tipo as text,
-  fecha as date,
-  valor as NUMERIC(7,3)
+  serial_no as text,
+  date_measure as date,
+  measure as NUMERIC(7,3)
 );
+COMMENT ON COLUMN ista.serial_no is 'Serial number';
+COMMENT ON COLUMN ista.date_measure is 'Date';
+COMMENT ON COLUMN ista.measure  is 'Measure value';
+CREATE INDEX dataidx on ista(probe_id,time);

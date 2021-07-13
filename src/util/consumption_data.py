@@ -81,12 +81,34 @@ class Tariff(object):
     def __init__(self, tariff):
         self.valley = float(tariff['valley'])
         self.peak = float(tariff['peak'])
+        self.flat = float(tariff['flat'])
 
     def get_price(self,time):
-        if time.hour >= 12 and time.hour < 22:
+        if self.is_energia_punta(time):
             return self.peak
-        else:
+        elif self.is_energia_flat(time):
+            return self.flat
+        elif self.is_energia_valle(time):
             return self.valley
+        else:
+            raise Exception('Unknown tariff:'+str(time))
+
+
+    def is_energia_punta(self, time):
+        return time.weekday() < 5 and \
+               (((time.hour>=10) and (time.hour<14)) or \
+               ((time.hour>=18) and (time.hour<22)))
+
+    def is_energia_plano(self, time):
+        return time.weekday() < 5 and \
+               (((time.hour >= 8) and (time.hour < 10)) or \
+               ((time.hour >= 14) and (time.hour < 18)) or \
+               ((time.hour >= 22) and (time.hour < 24)))
+
+    def is_energia_valle(self, time):
+        return time.weekday() >= 5 and \
+               ((time.hour >= 0) and (time.hour < 8))
+
 
 class Taxes(object):
     class Tax(object):

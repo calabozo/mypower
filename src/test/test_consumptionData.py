@@ -14,7 +14,7 @@ class TestConsumption(TestCase):
 
         tariff = Tariff({'valley':valley_price,'peak':peak_price})
 
-        mydate = datetime(2018,01,01)
+        mydate = datetime(2018,1,1)
 
         for h in xrange(0,12):
             price=tariff.get_price(mydate+timedelta(hours=h))

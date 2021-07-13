@@ -83,19 +83,24 @@ class Dao(object):
     def get_monthly_consumption(self,probe_id,mode='all'):
         #TODO: Summer and winter daylight savings
         cur = self.conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        base_sql = "select sum(energy) as energy,sum(price) as price,to_char(time,'YYYY-MM') as month from data where probe_id=%s and time>='2021-06-01' {} group by to_char(time, 'YYYY-MM') order by month desc;"
+
         if mode == 'all':
-            sql = "select sum(energy) as energy,sum(price) as price,to_char(time,'YYYY-MM') as month from data where probe_id=%s and time>='2019-12-01' group by to_char(time, 'YYYY-MM') order by month desc;"
+            sql = base_sql.format("")
         elif mode == 'peak':
-            sql = "select sum(energy) as energy,sum(price) as price,to_char(time,'YYYY-MM') as month from data where probe_id=%s and extract(hour from time)>=12 AND extract(hour from time)<22 AND time>='2019-12-01'  group by to_char(time, 'YYYY-MM') order by month desc;"
+            sql = base_sql.format("and extract(isodow from time)<6 and (extract(hour from time)>=10 AND extract(hour from time)<14 OR  extract(hour from time)>=18 AND extract(hour from time)<22) ")
+        elif mode == 'flat':
+            sql = base_sql.format("and extract(isodow from time)<6 and (extract(hour from time)>=8 AND extract(hour from time)<10 OR  extract(hour from time)>=14 AND extract(hour from time)<18 OR  extract(hour from time)>=22 AND extract(hour from time)<24) ")
         elif mode == 'valley':
-            sql = "select sum(energy) as energy,sum(price) as price,to_char(time,'YYYY-MM') as month from data where probe_id=%s and (extract(hour from time)<12 OR extract(hour from time)>=22) AND time>='2019-12-01'  group by to_char(time, 'YYYY-MM')  order by month desc;"
+            sql = base_sql.format("and (extract(isodow from time)>=6 OR extract(hour from time)<8)")
 
         cur.execute(sql, (probe_id,))
         rows=cur.fetchall()
         monthly_consumptions = []
         for row in rows:
             monthly_consumptions.append(MonthlyConsumption(row))
-
+        cur.close()
         return monthly_consumptions
 
 

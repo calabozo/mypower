@@ -9,18 +9,20 @@
   <div class="text_description">
       <p>
           La tarifa contratada tiene un precio distinto en función de la hora consumo.
-          La tarifa más barata, llamada valle, es la que se encuentra en horario de invierno desde las 22h hasta las 12h.
-          En verano el intervalo será desde las 23h hasta las 13h.
+          El horario de las tarifas de puede consultar a continuación:
+          <a href="https://www.esferaluz.es/blog/energias-renovables/tarifas-luz-2021/">Información tramos horario</a>
 
           En las siguientes tablas se muestra el precio por kwh junto con los impuestos aplicados
       </p>
   </div>
   <div style="width: 100%;display: table;">
+
       <div  class="tabla_tarifas">
           <h2>Tarifas vigentes</h2>
           <table>
-            <tr><td class="title">Tarifa valle (22h-12h):</td><td>{{ tariff.valley }} €/kwh </td></tr>
-            <tr><td class="title">Tarifa pico  (12h-22h):</td><td>{{ tariff.peak }}  €/kwh</td></tr>
+            <tr><td class="title">Tarifa valle :</td><td>{{ tariff.valley }} €/kwh </td></tr>
+            <tr><td class="title">Tarifa plano :</td><td>{{ tariff.flat }}  €/kwh</td></tr>
+            <tr><td class="title">Tarifa pico  :</td><td>{{ tariff.peak }}  €/kwh</td></tr>
           </table>
       </div>
       <div  class="tabla_impuestos">
@@ -39,9 +41,10 @@
       </p>
       <ul>
           <li>Fecha: Mes en que se produce la medida. El valor del mes en curso se actualiza cada 10 minutos.</li>
-          <li>Consumo horario valle: Kwh consumidos entre las 22h y las 12h en horario de invierno (23h-13h en horario verano).</li>
-          <li>Consumo horario pico: Kwh consumidos entre las 12h y las 22h en horario de invierno (13h-23h en horario verano).</li>
-          <li>Consumo total: Suma de los kwh valle y pico.</li>
+          <li>Consumo horario pico: Kwh consumidos en tramo P1.</li>
+          <li>Consumo horario plano: Kwh consumidos en tramo P2.</li>
+          <li>Consumo horario valle: Kwh consumidos en tramo P3.</li>
+          <li>Consumo total: Suma de los kwh pico, plano y valle.</li>
           <li>Importe: Importe final a pagar a mes vencido, impuestos incluidos.</li>
       </ul>
   </div>
@@ -55,17 +58,23 @@
                 {% endfor %}
           </tr>
           <tr>
-                <td class="title"> Consumo horario valle [kwh]</td>
-                {% for val in consumption.energy_valley %}
-                <td> {{ val }} </td>
-                {% endfor %}
-            </tr>
-          <tr>
                 <td class="title"> Consumo horario pico [kwh]</td>
                 {% for val in consumption.energy_peak %}
                 <td> {{ val }} </td>
                 {% endfor %}
-            </tr>
+          </tr>
+          <tr>
+                <td class="title"> Consumo horario plano [kwh]</td>
+                {% for val in consumption.energy_flat %}
+                <td> {{ val }} </td>
+                {% endfor %}
+          </tr>
+          <tr>
+                <td class="title"> Consumo horario valle [kwh]</td>
+                {% for val in consumption.energy_valley %}
+                <td> {{ val }} </td>
+                {% endfor %}
+          </tr>
           <tr>
                 <td class="title"> Consumo total [kwh] </td>
                 {% for val in consumption.energy_total %}

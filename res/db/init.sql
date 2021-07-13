@@ -23,6 +23,7 @@ CREATE TABLE public.tariff
     id INT,
     name text,
     valley NUMERIC(8,7),
+    flat   NUMERIC(8,7),
     peak   NUMERIC(8,7),
     from_date DATE,
     to_date DATE

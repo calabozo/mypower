@@ -29,6 +29,6 @@ if __name__=="__main__":
     if csv_file is not None:
         util.mirubox.read_data_and_save_in_db(csv_file)
     else:
-        exml = util.mirubox.launch_query_and_save_in_db('192.168.0.82')
+        exml = util.mirubox.launch_query_and_save_in_db('192.168.0.99')
 
 

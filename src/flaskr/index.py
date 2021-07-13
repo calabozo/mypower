@@ -15,6 +15,7 @@ def index():
 
     db_energy_total  = dao.get_monthly_consumption(2)
     db_energy_peak   = dao.get_monthly_consumption(2, mode = 'peak')
+    db_energy_flat = dao.get_monthly_consumption(2, mode='flat')
     db_energy_valley = dao.get_monthly_consumption(2, mode = 'valley')
     dao.disconnect()
 
@@ -30,15 +31,19 @@ def index():
     for e in db_energy_peak:
         energy_peak.append(str(e.energy/1e3))
 
+    energy_flat = []
+    for e in db_energy_flat:
+        energy_flat.append(str(e.energy/1e3))
+
     energy_valley = []
     for e in db_energy_valley:
-        energy_valley.append(str(e.energy/1e3))
-
+        energy_valley.append(str(e.energy / 1e3))
 
     consumption = {'date':months,
                    'energy_total':energy_total,
                    'price_total': price_total,
                    'energy_peak': energy_peak,
+                   'energy_flat': energy_flat,
                    'energy_valley':energy_valley}
 
     return render_template('index.html', tariff=tariff, consumption=consumption, taxes = taxes.taxes)

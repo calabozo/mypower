@@ -99,14 +99,14 @@ class Tariff(object):
                (((time.hour>=10) and (time.hour<14)) or \
                ((time.hour>=18) and (time.hour<22)))
 
-    def is_energia_plano(self, time):
+    def is_energia_flat(self, time):
         return time.weekday() < 5 and \
                (((time.hour >= 8) and (time.hour < 10)) or \
                ((time.hour >= 14) and (time.hour < 18)) or \
                ((time.hour >= 22) and (time.hour < 24)))
 
     def is_energia_valle(self, time):
-        return time.weekday() >= 5 and \
+        return time.weekday() >= 5 or \
                ((time.hour >= 0) and (time.hour < 8))
 
 

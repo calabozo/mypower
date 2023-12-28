@@ -33,6 +33,7 @@ class ConsumptionData(object):
         self.price = None
 
     def parse_db(self,row):
+        self.time = row['time']
         self.vrms = float(row['vrms'])
         self.irms = float(row['irms'])
         self.power_aparent = float(row['power_aparent'])
@@ -55,6 +56,9 @@ class ConsumptionData(object):
             self.energy = 0
         else:
             self.energy = self.energy_active - prev_consumption_data.energy_active
+        if self.energy < 0:
+            elapsed_seconds = (self.time-prev_consumption_data.time).total_seconds()
+            self.energy = self.power_active*elapsed_seconds/3600.0
 
     def set_tariff(self,tariff):
         self.price=tariff.get_price(self.time)*self.energy/1000

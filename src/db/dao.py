@@ -55,7 +55,6 @@ class Dao(object):
         sql = "INSERT INTO data (probe_id, time, vrms,irms, power_aparent, power_active, power_reactive_ind, " \
               "power_reactive_cap, frequency, energy, energy_active, energy_reactive_ind, energy_reactive_cap, price) " \
               "VALUES (%s,%s, %s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-
         cur = self.conn.cursor()
         cur.execute(sql,(consumption_data.probe_id,
                          consumption_data.time, consumption_data.vrms, consumption_data.irms,
@@ -84,7 +83,7 @@ class Dao(object):
         #TODO: Summer and winter daylight savings
         cur = self.conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        base_sql = "select sum(energy) as energy,sum(price) as price,to_char(time,'YYYY-MM') as month from data where probe_id=%s and time>='2021-06-01' and energy>0 and energy<260000 {} group by to_char(time, 'YYYY-MM') order by month desc;"
+        base_sql = "select sum(energy) as energy,sum(price) as price,to_char(time,'YYYY-MM') as month from data where probe_id=%s and time>='2024-08-04 10:30' and energy>0 and energy<1000 {} group by to_char(time, 'YYYY-MM') order by month desc;"
 
         if mode == 'all':
             sql = base_sql.format("")

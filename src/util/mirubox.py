@@ -40,7 +40,8 @@ def launch_query_and_save_in_db(host):
         cmpdata.parse_xml(probe['label'], exml)
         cmpdata.calc_energy(last_data)
         cmpdata.set_tariff(tariff)
-        db.save_data(cmpdata)
+        if cmpdata.energy>0:
+            db.save_data(cmpdata)
 
     db.disconnect()
 
